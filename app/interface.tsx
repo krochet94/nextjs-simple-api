@@ -13,3 +13,15 @@ export type UsersResponse = {
     total_pages: number;
     data: User[];
   };
+
+  export type UserProps = {
+    users: User[],
+    hasMore: boolean,
+    handleLoadMore: () => Promise<DataResponse>;
+  };
+
+  export type DataResponse = {
+    data: User[],
+    hasMore: boolean,
+    error: boolean
+  }
