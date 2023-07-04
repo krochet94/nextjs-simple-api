@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { Card , Button, Container, Avatar, Grid, Typography, CircularProgress } from '../../lib/mui'
-import type { User, UserProps } from '../interface';
+import { Card , Button, Container, Avatar, Grid, Typography, CircularProgress } from '../lib/mui'
+import type { User, UserProps } from './interface';
 
 
 const Users: React.FC<UserProps> = ({ users, hasMore, handleLoadMore }) => {
@@ -18,10 +18,10 @@ const Users: React.FC<UserProps> = ({ users, hasMore, handleLoadMore }) => {
     }
 
     return (
-        <Container style={{ display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center', padding: '30px' }}>
+        <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center', padding: '30px' }}>
         {userData.length < 1 ? <CircularProgress /> : (
             <>
-            <Typography variant="h4" style={{ margin: '50px 0px', color: 'whitesmoke' }}>USERS</Typography>
+            <Typography variant="h4" style={{ margin: '50px 0px', color: 'whitesmoke' }}>Simple Api Fetching and Display using NextJs</Typography>
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{margin: '20px 0px'}}>
                 {userData.map(user => (
                 <Grid item key={user.id} xs={2} sm={4} md={4}>
@@ -39,7 +39,7 @@ const Users: React.FC<UserProps> = ({ users, hasMore, handleLoadMore }) => {
                 {isLoading ? 'Loading...' : 'Load more'}
                 </Button>
             )}
-            {!hasMoreData && <Typography style={{ marginTop: '30px 0px', color: 'whitesmoke' }}>No more users to fetch.</Typography>}
+            {!hasMoreData && <Typography style={{ marginTop: 30, color: 'whitesmoke' }}>No more users to fetch.</Typography>}
             </>
         )}
         </Container>

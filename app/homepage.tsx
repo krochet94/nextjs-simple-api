@@ -1,18 +1,41 @@
-"use client";
-import { useRouter } from 'next/navigation';
-import { Button, Container } from '../lib/mui';
+import type { User, DataResponse } from './interface';
+import Users from './users';
+import Footer from './footer';
+import fetchUsers from './fetch-data';
 
+let data: User[] = [];
+let hasMore: boolean = true;
+let page: number = 1;
 
-const HomePage = () => {
-    const router = useRouter();
- 
-    return (
-        <Container style={{ display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center', padding: '30px' }}>
-            <Button variant="contained" onClick={() => router.push('/users')} style={{marginTop: '30px'}}>
-                TO USERS PAGE
-            </Button>
-        </Container>
-    );
+const HomePage = async () => {
+   // onload initial values
+   data = [];
+   hasMore = true;
+   page = 1;
+
+   const initialData: DataResponse = (await fetchUsers(page, data, hasMore))!;
+   
+   page++;
+   hasMore = initialData?.hasMore;
+   data = initialData?.data;
+   if (initialData?.error) window.alert('Error fetching users');
+
+   
+   async function handleLoadMore () {
+       'use server';
+       const resData: DataResponse = (await fetchUsers(page, data, hasMore))!;
+       page++;
+       hasMore = resData?.hasMore;
+       data = resData?.data;
+       return resData;
+   };
+
+ return (
+    <>
+        <Users users={data} hasMore={hasMore} handleLoadMore={handleLoadMore} />
+        <Footer />
+    </>
+ );
 };
 
 export default HomePage;
